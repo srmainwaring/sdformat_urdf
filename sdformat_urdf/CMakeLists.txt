@@ -14,9 +14,12 @@ find_package(ament_cmake_ros REQUIRED)
 
 find_package(pluginlib REQUIRED)
 find_package(rcutils REQUIRED)
+find_package(urdfdom REQUIRED)
 find_package(urdfdom_headers 1.0.6 REQUIRED)
 find_package(urdf_parser_plugin REQUIRED)
+find_package(tinyxml_vendor REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
+find_package(TinyXML REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
 # Default to Fortress
@@ -86,6 +89,17 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
   urdf_parser_plugin::urdf_parser_plugin
 )
 
+# Add sdf2urdf executable
+add_executable(sdf2urdf
+  src/sdf2urdf.cpp
+)
+target_link_libraries(sdf2urdf PRIVATE
+  sdformat${SDF_VER}::sdformat${SDF_VER}
+  sdformat_urdf
+  ${TinyXML_LIBRARIES}
+  ${urdfdom_LIBRARIES}
+)
+
 ament_export_dependencies(pluginlib)
 ament_export_dependencies(rcutils)
 ament_export_dependencies(sdformat${SDF_VER})
@@ -99,6 +113,11 @@ install(TARGETS sdformat_urdf EXPORT sdformat_urdf-export
   RUNTIME DESTINATION bin
 )
 install(TARGETS sdformat_urdf_plugin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+install(TARGETS sdf2urdf
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
