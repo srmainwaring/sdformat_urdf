@@ -19,15 +19,40 @@ find_package(urdf_parser_plugin REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
-find_package(sdformat_vendor REQUIRED)
-find_package(sdformat REQUIRED)
+if("$ENV{GZ_VERSION}" STREQUAL "harmonic" OR NOT DEFINED "ENV{GZ_VERSION}")
+  # Harmonic (default)
+
+  find_package(sdformat14 REQUIRED)
+  set(SDFORMAT_VER ${sdformat14_VERSION_MAJOR})
+  
+  message(STATUS "Compiling against Gazebo Harmonic")
+elseif("$ENV{GZ_VERSION}" STREQUAL "ionic")
+  # Ionic
+
+  find_package(sdformat15 REQUIRED)
+  set(SDFORMAT_VER ${sdformat15_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Gazebo Ionic")
+elseif("$ENV{GZ_VERSION}" STREQUAL "garden")
+  # Garden
+
+  find_package(sdformat13 REQUIRED)
+  set(SDFORMAT_VER ${sdformat13_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Gazebo Garden")
+else()  
+  message(FATAL_ERROR "Unsupported GZ_VERSION: $ENV{GZ_VERSION}")
+endif()
+
+# find_package(sdformat_vendor REQUIRED)
+# find_package(sdformat REQUIRED)
 
 # Add sdformat_urdf shared library
 add_library(sdformat_urdf SHARED
   src/sdformat_urdf.cpp
 )
 target_link_libraries(sdformat_urdf PUBLIC
-  sdformat::core
+  sdformat${SDFORMAT_VER}::core
   urdfdom_headers::urdfdom_headers
 )
 target_link_libraries(sdformat_urdf PRIVATE

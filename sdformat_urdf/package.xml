@@ -17,7 +17,8 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
   <buildtool_export_depend>ament_cmake_ros</buildtool_export_depend>
 
-  <depend>sdformat_vendor</depend>
+  <!-- <depend>sdformat_vendor</depend> -->
+  <depend>sdformat14</depend>
 
   <depend>urdf</depend>
 
