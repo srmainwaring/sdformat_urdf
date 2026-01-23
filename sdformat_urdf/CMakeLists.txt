@@ -33,6 +33,13 @@ elseif("$ENV{GZ_VERSION}" STREQUAL "ionic")
   set(SDFORMAT_VER ${sdformat15_VERSION_MAJOR})
 
   message(STATUS "Compiling against Gazebo Ionic")
+elseif("$ENV{GZ_VERSION}" STREQUAL "jetty")
+  # Jetty
+
+  find_package(sdformat REQUIRED)
+  set(SDFORMAT_VER "")
+
+  message(STATUS "Compiling against Gazebo Jetty")
 elseif("$ENV{GZ_VERSION}" STREQUAL "garden")
   # Garden
 

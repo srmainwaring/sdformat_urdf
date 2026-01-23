@@ -17,8 +17,15 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
   <buildtool_export_depend>ament_cmake_ros</buildtool_export_depend>
 
-  <!-- <depend>sdformat_vendor</depend> -->
-  <depend>sdformat14</depend>
+  <!-- Harmonic (default) -->
+  <depend condition="$GZ_VERSION == harmonic">sdformat14</depend>
+  <depend condition="$GZ_VERSION == ''">sdformat14</depend>
+  <!-- Ionic -->
+  <depend condition="$GZ_VERSION == ionic">sdformat15</depend>
+  <!-- Jetty -->
+  <depend condition="$GZ_VERSION == jetty">sdformat</depend>
+  <!-- Garden -->
+  <depend condition="$GZ_VERSION == garden">sdformat13</depend>
 
   <depend>urdf</depend>
 
